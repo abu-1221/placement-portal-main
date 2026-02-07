@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Register for PlaceMe - India's Premier Student Placement Portal"
+    />
+    <title>Register | PlaceMe</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/auth-professional.css" />
+  </head>
+  <body>
+    <!-- Main Container -->
+    <div class="auth-container">
+      <div class="auth-card wide">
+        <!-- Header -->
+        <div class="auth-header">
+          <a href="index.html" class="auth-logo">
+            <img src="logo.png" class="brand-logo" alt="PlaceMe Logo" />
+          </a>
+          <h1>Create Account</h1>
+          <p>Join PlaceMe and start your journey</p>
+        </div>
+
+        <!-- User Type Tabs -->
+        <div class="auth-tabs">
+          <button class="tab-btn active" data-type="student">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+              <path d="M6 12v5c3 3 9 3 12 0v-5" />
+            </svg>
+            <span>Student</span>
+          </button>
+          <button class="tab-btn" data-type="staff">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span>Staff</span>
+          </button>
+        </div>
+
+        <!-- Registration Form -->
+        <form id="registerForm" autocomplete="off">
+          <input type="hidden" id="userType" value="student" />
+
+          <!-- Common Fields -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="fullName">Full Name *</label>
+              <div class="input-wrapper">
+                <svg
+                  class="input-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <input
+                  type="text"
+                  id="fullName"
+                  class="form-input"
+                  placeholder="Enter your full name"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">Email Address *</label>
+              <div class="input-wrapper">
+                <svg
+                  class="input-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-input"
+                  placeholder="Enter your email"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Student Fields -->
+          <div id="studentFields">
+            <div class="section-title"><span>Academic Details</span></div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="registerNumber"
+                  >Register Number *</label
+                >
+                <div class="input-wrapper">
+                  <svg
+                    class="input-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <line x1="9" y1="9" x2="15" y2="9" />
+                    <line x1="9" y1="13" x2="15" y2="13" />
+                    <line x1="9" y1="17" x2="13" y2="17" />
+                  </svg>
+                  <input
+                    type="text"
+                    id="registerNumber"
+                    class="form-input"
+                    placeholder="e.g., 2024CSE001"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="department">Department *</label>
+                <div class="input-wrapper">
+                  <svg
+                    class="input-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" />
+                  </svg>
+                  <select id="department" class="form-input" required>
+                    <option value="">Select Department</option>
+                    <option value="CSE">Computer Science</option>
+                    <option value="ECE">Electronics & Communication</option>
+                    <option value="EEE">Electrical & Electronics</option>
+                    <option value="MECH">Mechanical Engineering</option>
+                    <option value="CIVIL">Civil Engineering</option>
+                    <option value="IT">Information Technology</option>
+                    <option value="AIDS">AI & Data Science</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="year">Year *</label>
+                <div class="input-wrapper">
+                  <svg
+                    class="input-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <select id="year" class="form-input" required>
+                    <option value="">Select Year</option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="batch">Batch *</label>
+                <div class="input-wrapper">
+                  <svg
+                    class="input-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                  <select id="batch" class="form-input" required>
+                    <option value="">Select Batch</option>
+                    <option value="2022-2026">2022-2026</option>
+                    <option value="2023-2027">2023-2027</option>
+                    <option value="2024-2028">2024-2028</option>
+                    <option value="2025-2029">2025-2029</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="dob">Date of Birth *</label>
+              <div class="input-wrapper">
+                <svg
+                  class="input-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <input type="date" id="dob" class="form-input" required />
+              </div>
+              <div
+                class="form-hint"
+                style="font-size: 0.8rem; color: #6b7280; margin-top: 0.25rem"
+              >
+                This will be used as your password (DDMMYYYY format)
+              </div>
+            </div>
+          </div>
+
+          <!-- Staff Fields -->
+          <div id="staffFields" style="display: none">
+            <div class="section-title"><span>Staff Details</span></div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="staffCode">Staff Code *</label>
+                <div class="input-wrapper">
+                  <svg
+                    class="input-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <line x1="9" y1="9" x2="15" y2="9" />
+                    <line x1="9" y1="13" x2="15" y2="13" />
+                  </svg>
+                  <input
+                    type="text"
+                    id="staffCode"
+                    class="form-input"
+                    placeholder="e.g., STF001"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="staffDepartment"
+                  >Department *</label
+                >
+                <div class="input-wrapper">
+                  <svg
+                    class="input-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" />
+                  </svg>
+                  <select id="staffDepartment" class="form-input">
+                    <option value="">Select Department</option>
+                    <option value="CSE">Computer Science</option>
+                    <option value="ECE">Electronics & Communication</option>
+                    <option value="EEE">Electrical & Electronics</option>
+                    <option value="MECH">Mechanical Engineering</option>
+                    <option value="ADMIN">Administration</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="designation">Designation *</label>
+              <div class="input-wrapper">
+                <svg
+                  class="input-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M20 7h-4V3H8v4H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"
+                  />
+                </svg>
+                <select id="designation" class="form-input">
+                  <option value="">Select Designation</option>
+                  <option value="HOD">Head of Department</option>
+                  <option value="Professor">Professor</option>
+                  <option value="Associate Professor">
+                    Associate Professor
+                  </option>
+                  <option value="Assistant Professor">
+                    Assistant Professor
+                  </option>
+                  <option value="Placement Officer">Placement Officer</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="staffPassword">Password *</label>
+              <div class="input-wrapper">
+                <svg
+                  class="input-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="11" width="18" height="11" rx="2" />
+                  <path d="M7 11V7a5 5 0 0110 0v4" />
+                </svg>
+                <input
+                  type="password"
+                  id="staffPassword"
+                  class="form-input"
+                  placeholder="Create a password"
+                  autocomplete="new-password"
+                  style="padding-right: 2.75rem"
+                />
+                <button
+                  type="button"
+                  class="toggle-password"
+                  id="toggleStaffPassword"
+                >
+                  <svg
+                    class="eye-open"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                  <svg
+                    class="eye-closed"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    style="display: none"
+                  >
+                    <path
+                      d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"
+                    />
+                    <line x1="1" y1="1" x2="23" y2="23" />
+                  </svg>
+                </button>
+              </div>
+              <div class="password-strength" id="passwordStrength">
+                <!-- Strength bar logic removed for simplicity in UI request, or can add back if desired. Keeping it minimal/pro -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Terms -->
+          <div style="margin: 1.5rem 0">
+            <label class="checkbox-wrapper">
+              <input type="checkbox" id="agreeTerms" />
+              <span
+                >I agree to the <a href="#" class="auth-link">Terms</a> and
+                <a href="#" class="auth-link">Privacy Policy</a></span
+              >
+            </label>
+          </div>
+
+          <button type="submit" class="btn-primary" id="registerBtn">
+            Create Account
+          </button>
+
+          <div class="alert" id="authAlert"></div>
+        </form>
+
+        <div class="divider"><span>Already registered?</span></div>
+
+        <a href="login.html" class="btn-secondary">Sign In</a>
+      </div>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script>
+      // Initialize required attributes on load
+      window.onload = function () {
+        const studentFields = document.getElementById("studentFields");
+        const staffFields = document.getElementById("staffFields");
+        if (!studentFields || !staffFields) return; // safety
+
+        const studentInputs = studentFields.querySelectorAll("input, select");
+        const staffInputs = staffFields.querySelectorAll("input, select");
+
+        // Default is student
+        studentInputs.forEach((i) => i.setAttribute("required", ""));
+        staffInputs.forEach((i) => i.removeAttribute("required"));
+      };
+
+      // Tab switching
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          document
+            .querySelectorAll(".tab-btn")
+            .forEach((b) => b.classList.remove("active"));
+          this.classList.add("active");
+          document.getElementById("userType").value = this.dataset.type;
+
+          const studentFields = document.getElementById("studentFields");
+          const staffFields = document.getElementById("staffFields");
+
+          const studentInputs = studentFields.querySelectorAll("input, select");
+          const staffInputs = staffFields.querySelectorAll("input, select");
+
+          if (this.dataset.type === "student") {
+            studentFields.style.display = "block";
+            staffFields.style.display = "none";
+
+            // Adjust required attributes
+            studentInputs.forEach((i) => i.setAttribute("required", ""));
+            staffInputs.forEach((i) => i.removeAttribute("required"));
+          } else {
+            studentFields.style.display = "none";
+            staffFields.style.display = "block";
+
+            // Adjust required attributes
+            studentInputs.forEach((i) => i.removeAttribute("required"));
+            staffInputs.forEach((i) => i.setAttribute("required", ""));
+          }
+        });
+      });
+
+      // Password toggle
+      const toggleStaffPassword = document.getElementById(
+        "toggleStaffPassword",
+      );
+      if (toggleStaffPassword) {
+        toggleStaffPassword.addEventListener("click", function () {
+          const password = document.getElementById("staffPassword");
+          const eyeOpen = this.querySelector(".eye-open");
+          const eyeClosed = this.querySelector(".eye-closed");
+
+          if (password.type === "password") {
+            password.type = "text";
+            eyeOpen.style.display = "none";
+            eyeClosed.style.display = "block";
+          } else {
+            password.type = "password";
+            eyeOpen.style.display = "block";
+            eyeClosed.style.display = "none";
+          }
+        });
+      }
+
+      // Form submission
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const btn = document.getElementById("registerBtn");
+          const alert = document.getElementById("authAlert");
+          const userType = document.getElementById("userType").value;
+
+          // Manual Validation to prevent crashes
+          if (userType === "student") {
+            const regNo = document.getElementById("registerNumber").value;
+            const dob = document.getElementById("dob").value;
+            if (!regNo || !dob) {
+              alert.className = "alert error";
+              alert.style.display = "block";
+              alert.textContent = "Please fill in Register Number and DOB.";
+              btn.innerHTML = "Create Account";
+              btn.disabled = false;
+              return;
+            }
+          } else {
+            const code = document.getElementById("staffCode").value;
+            const pw = document.getElementById("staffPassword").value;
+            if (!code || !pw) {
+              alert.className = "alert error";
+              alert.style.display = "block";
+              alert.textContent = "Please fill in Staff Code and Password.";
+              btn.innerHTML = "Create Account";
+              btn.disabled = false;
+              return;
+            }
+          }
+
+          btn.innerHTML = '<div class="spinner"></div>';
+          btn.disabled = true;
+          alert.style.display = "none";
+
+          // Gather Data
+          const newUser = {
+            type: userType,
+            fullName:
+              document.getElementById("fullName").value || "Unknown User", // Fallback
+            email: document.getElementById("email").value || "",
+          };
+
+          if (userType === "student") {
+            newUser.registerNumber =
+              document.getElementById("registerNumber").value;
+            newUser.department = document.getElementById("department").value;
+            newUser.year = document.getElementById("year").value;
+            newUser.batch = document.getElementById("batch").value;
+            newUser.dob = document.getElementById("dob").value;
+
+            // Create username and password
+            newUser.username = newUser.registerNumber; // Use RegNo as username
+            // Format DOB as password (DDMMYYYY)
+            // Safety check for DOB format
+            if (newUser.dob) {
+              const dobParts = newUser.dob.split("-"); // YYYY-MM-DD
+              if (dobParts.length === 3) {
+                newUser.password = `${dobParts[2]}${dobParts[1]}${dobParts[0]}`;
+              } else {
+                newUser.password = "12345678"; // Safe fallback
+              }
+            } else {
+              newUser.password = "12345678";
+            }
+          } else {
+            newUser.staffCode = document.getElementById("staffCode").value;
+            newUser.department =
+              document.getElementById("staffDepartment").value;
+            newUser.designation = document.getElementById("designation").value;
+            newUser.password = document.getElementById("staffPassword").value;
+
+            newUser.username = newUser.staffCode; // Use StaffCode as username
+          }
+
+          setTimeout(() => {
+            // Save to Database (Professional Method)
+            try {
+              if (window.DB) {
+                window.DB.addUser(newUser);
+
+                alert.className = "alert success";
+                alert.style.display = "block";
+                alert.textContent = `Account created! Username: ${newUser.username}`;
+
+                setTimeout(() => {
+                  window.location.href = `login.html?type=${userType}`;
+                }, 2000);
+              } else {
+                throw new Error("Database not initialized");
+              }
+            } catch (err) {
+              alert.className = "alert error";
+              alert.style.display = "block";
+              alert.textContent =
+                err.message || "Registration failed. Try again.";
+              btn.innerHTML = "Create Account";
+              btn.disabled = false;
+            }
+          }, 1000);
+        });
+    </script>
+  </body>
+</html>

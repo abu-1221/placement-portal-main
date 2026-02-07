@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Login to PlaceMe - India's Premier Student Placement Portal"
+    />
+    <title>Login | PlaceMe</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/auth-professional.css" />
+  </head>
+  <body>
+    <!-- Main Container -->
+    <div class="auth-container">
+      <div class="auth-card">
+        <!-- Header -->
+        <div class="auth-header">
+          <a href="index.html" class="auth-logo">
+            <img src="logo.png" class="brand-logo" alt="PlaceMe Logo" />
+          </a>
+          <h1>Welcome Back</h1>
+          <p>Sign in to your account</p>
+        </div>
+
+        <!-- User Type Tabs -->
+        <div class="auth-tabs">
+          <button class="tab-btn active" data-type="student">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+              <path d="M6 12v5c3 3 9 3 12 0v-5" />
+            </svg>
+            <span>Student</span>
+          </button>
+          <button class="tab-btn" data-type="staff">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span>Staff</span>
+          </button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" autocomplete="off">
+          <input type="hidden" id="userType" value="student" />
+
+          <div class="form-group">
+            <label class="form-label" for="username">Username / ID</label>
+            <div class="input-wrapper">
+              <svg
+                class="input-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <input
+                type="text"
+                id="username"
+                class="form-input"
+                placeholder="Enter your ID (e.g., 2024CSE001)"
+                autocomplete="off"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <div class="input-wrapper">
+              <svg
+                class="input-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+              </svg>
+              <input
+                type="password"
+                id="password"
+                class="form-input"
+                placeholder="Enter your password"
+                autocomplete="new-password"
+                required
+              />
+              <button type="button" class="toggle-password" id="togglePassword">
+                <svg
+                  class="eye-open"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <svg
+                  class="eye-closed"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  style="display: none"
+                >
+                  <path
+                    d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"
+                  />
+                  <line x1="1" y1="1" x2="23" y2="23" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 1.5rem;
+            "
+          >
+            <label class="checkbox-wrapper">
+              <input type="checkbox" id="rememberMe" />
+              <span>Remember me</span>
+            </label>
+            <a
+              href="#"
+              style="
+                color: var(--primary-color);
+                text-decoration: none;
+                font-size: 0.9rem;
+              "
+              >Forgot password?</a
+            >
+          </div>
+
+          <button type="submit" class="btn-primary" id="loginBtn">
+            Sign In
+          </button>
+
+          <div class="alert" id="authAlert"></div>
+        </form>
+
+        <div class="divider"><span>New here?</span></div>
+
+        <a href="register.html" class="btn-secondary">Create Account</a>
+      </div>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script>
+      // Check URL parameters for user type
+      window.addEventListener("DOMContentLoaded", () => {
+        // 1. Auto-redirect if already logged in
+        try {
+          const existingSession = sessionStorage.getItem("user");
+          if (existingSession) {
+            const user = JSON.parse(existingSession);
+            if (user && user.type) {
+              window.location.replace(
+                user.type === "student"
+                  ? "student-dashboard.html"
+                  : "staff-dashboard.html",
+              );
+              return;
+            }
+          }
+        } catch (e) {
+          sessionStorage.clear();
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get("type");
+
+        if (type && (type === "student" || type === "staff")) {
+          // Find the button and click it to trigger logic
+          const tabBtn = document.querySelector(
+            `.tab-btn[data-type="${type}"]`,
+          );
+          if (tabBtn) {
+            tabBtn.click();
+          }
+        }
+      });
+
+      // Tab switching
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          document
+            .querySelectorAll(".tab-btn")
+            .forEach((b) => b.classList.remove("active"));
+          this.classList.add("active");
+          document.getElementById("userType").value = this.dataset.type;
+        });
+      });
+
+      // Password toggle
+      document
+        .getElementById("togglePassword")
+        .addEventListener("click", function () {
+          const password = document.getElementById("password");
+          const eyeOpen = this.querySelector(".eye-open");
+          const eyeClosed = this.querySelector(".eye-closed");
+
+          if (password.type === "password") {
+            password.type = "text";
+            eyeOpen.style.display = "none";
+            eyeClosed.style.display = "block";
+          } else {
+            password.type = "password";
+            eyeOpen.style.display = "block";
+            eyeClosed.style.display = "none";
+          }
+        });
+
+      // Form submission
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const btn = document.getElementById("loginBtn");
+          const alert = document.getElementById("authAlert");
+          const userType = document.getElementById("userType").value;
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          btn.innerHTML = '<div class="spinner"></div>';
+          btn.disabled = true;
+          alert.style.display = "none";
+
+          // Simulate API call
+          setTimeout(() => {
+            let isValid = false;
+            let user = null;
+
+            // 1. Check Demo Credentials
+            if (
+              (userType === "student" &&
+                username === "demo_student" &&
+                password === "demo123") ||
+              (userType === "staff" &&
+                username === "demo_staff" &&
+                password === "demo123")
+            ) {
+              isValid = true;
+            }
+
+            // 2. Check Database (Professional Method)
+            if (!isValid) {
+              // DB is globally available via db.js
+              if (window.DB) {
+                user = window.DB.authenticate(username, password, userType);
+                if (user) isValid = true;
+              } else {
+                console.error("Database connection failed (db.js missing)");
+              }
+            }
+
+            if (isValid) {
+              alert.className = "alert success";
+              alert.style.display = "block";
+
+              // Create robust session object
+              let sessionName =
+                userType === "student" ? "Demo Student" : "Demo Staff";
+              if (user && user.fullName) {
+                sessionName = user.fullName;
+              }
+
+              const sessionData = {
+                username: username,
+                type: userType,
+                name: sessionName,
+              };
+
+              // Safely merge user data
+              if (user) {
+                // exclude password from session
+                const { password, ...safeUser } = user;
+                Object.assign(sessionData, safeUser);
+              }
+
+              // Store session
+              sessionStorage.setItem("user", JSON.stringify(sessionData));
+
+              // Debug log
+              console.log("Session set:", sessionData);
+              console.log(
+                "Redirecting to:",
+                userType === "student"
+                  ? "student-dashboard.html"
+                  : "staff-dashboard.html",
+              );
+
+              setTimeout(() => {
+                const targetPage =
+                  userType === "student"
+                    ? "student-dashboard.html"
+                    : "staff-dashboard.html";
+                window.location.replace(targetPage);
+              }, 500);
+            } else {
+              alert.className = "alert error";
+              alert.style.display = "block";
+              alert.textContent = "Invalid credentials. Please try again.";
+              btn.innerHTML = "Sign In";
+              btn.disabled = false;
+            }
+          }, 800);
+        });
+    </script>
+  </body>
+</html>
