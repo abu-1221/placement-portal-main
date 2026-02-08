@@ -103,9 +103,14 @@ app.get('/api/results/all', async (req, res) => {
 });
 
 
-// Initialization
-sequelize.sync().then(() => {
-  app.listen(PORT, '0.0.0.0', () => { // Bind to 0.0.0.0 for external access
-    console.log(`Server running on port ${PORT}`);
-  });
-}).catch(err => console.error('Database sync error:', err));
+// Export for Vercel serverless
+module.exports = app;
+
+if (require.main === module) {
+  // Initialization for local/Render
+  sequelize.sync().then(() => {
+    app.listen(PORT, '0.0.0.0', () => { // Bind to 0.0.0.0 for external access
+      console.log(`Server running on port ${PORT}`);
+    });
+  }).catch(err => console.error('Database sync error:', err));
+}
