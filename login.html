@@ -255,7 +255,7 @@
       // Form submission
       document
         .getElementById("loginForm")
-        .addEventListener("submit", function (e) {
+        .addEventListener("submit", async function (e) {
           e.preventDefault();
 
           const btn = document.getElementById("loginBtn");
@@ -268,54 +268,31 @@
           btn.disabled = true;
           alert.style.display = "none";
 
-          // Simulate API call
-          setTimeout(() => {
-            let isValid = false;
+          try {
             let user = null;
 
             // Database Authentication
             if (window.DB) {
-              const dbUser = window.DB.authenticate(
-                username,
-                password,
-                userType,
-              );
-              if (dbUser) {
-                isValid = true;
-                user = dbUser;
-              }
+              user = await window.DB.authenticate(username, password, userType);
             } else {
-              // Fallback error if DB script missing
-              console.error("Database connection failed");
+              throw new Error("Database connection failed");
             }
 
-            if (isValid) {
+            if (user) {
               alert.className = "alert success";
               alert.style.display = "block";
               alert.textContent = "Authentication successful. Redirecting...";
 
               // Create robust session object
-              let sessionName =
-                userType === "student" ? "Student" : "Staff Member";
-              if (user && user.fullName) {
-                sessionName = user.fullName;
-              }
+              // Ensure we don't store the password in session storage
+              const { password, ...safeUser } = user;
 
-              const sessionData = {
-                username: username,
-                type: userType,
-                name: sessionName,
-              };
-
-              // Safely merge user data
-              if (user) {
-                // exclude password from session
-                const { password, ...safeUser } = user;
-                Object.assign(sessionData, safeUser);
-              }
+              // Normalize name if missing
+              if (!safeUser.name && safeUser.fullName)
+                safeUser.name = safeUser.fullName;
 
               // Store session
-              sessionStorage.setItem("user", JSON.stringify(sessionData));
+              sessionStorage.setItem("user", JSON.stringify(safeUser));
 
               setTimeout(() => {
                 const targetPage =
@@ -325,16 +302,20 @@
                 window.location.replace(targetPage);
               }, 800);
             } else {
-              alert.className = "alert error";
-              alert.style.display = "block";
-              alert.textContent =
-                "Invalid credentials. Please checking your username and password.";
-
-              // Reset button
-              btn.textContent = "Sign In";
-              btn.disabled = false;
+              throw new Error(
+                "Invalid credentials. Please check your username and password.",
+              );
             }
-          }, 800);
+          } catch (err) {
+            console.error(err);
+            alert.className = "alert error";
+            alert.style.display = "block";
+            alert.textContent = err.message || "Login failed.";
+
+            // Reset button
+            btn.textContent = "Sign In";
+            btn.disabled = false;
+          }
         });
     </script>
   </body>

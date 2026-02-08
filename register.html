@@ -506,7 +506,7 @@
       // Form submission
       document
         .getElementById("registerForm")
-        .addEventListener("submit", function (e) {
+        .addEventListener("submit", async function (e) {
           e.preventDefault();
 
           const btn = document.getElementById("registerBtn");
@@ -543,70 +543,76 @@
           alert.style.display = "none";
 
           // Gather Data
-          const newUser = {
+          let newUser = {
             type: userType,
-            fullName:
-              document.getElementById("fullName").value || "Unknown User", // Fallback
-            email: document.getElementById("email").value || "",
+            name: document.getElementById("fullName").value || "Unknown User", // Map 'fullName' to 'name' for backend
+            username: "",
+            password: "",
+            details: {},
           };
 
+          // Map Frontend Form to Backend Expected Schema (User.js)
           if (userType === "student") {
-            newUser.registerNumber =
-              document.getElementById("registerNumber").value;
-            newUser.department = document.getElementById("department").value;
-            newUser.year = document.getElementById("year").value;
-            newUser.batch = document.getElementById("batch").value;
-            newUser.dob = document.getElementById("dob").value;
+            const regNo = document.getElementById("registerNumber").value;
+            const dob = document.getElementById("dob").value;
 
-            // Create username and password
-            newUser.username = newUser.registerNumber; // Use RegNo as username
-            // Format DOB as password (DDMMYYYY)
-            // Safety check for DOB format
-            if (newUser.dob) {
-              const dobParts = newUser.dob.split("-"); // YYYY-MM-DD
-              if (dobParts.length === 3) {
-                newUser.password = `${dobParts[2]}${dobParts[1]}${dobParts[0]}`;
-              } else {
-                newUser.password = "12345678"; // Safe fallback
-              }
+            newUser.username = regNo; // Username is RegNo
+
+            // Password generation logic
+            if (dob) {
+              const parts = dob.split("-");
+              newUser.password =
+                parts.length === 3
+                  ? `${parts[2]}${parts[1]}${parts[0]}`
+                  : "12345678";
             } else {
               newUser.password = "12345678";
             }
+
+            newUser.details = {
+              registerNumber: regNo,
+              department: document.getElementById("department").value,
+              year: document.getElementById("year").value,
+              batch: document.getElementById("batch").value,
+              dob: dob,
+            };
           } else {
-            newUser.staffCode = document.getElementById("staffCode").value;
-            newUser.department =
-              document.getElementById("staffDepartment").value;
-            newUser.designation = document.getElementById("designation").value;
+            const code = document.getElementById("staffCode").value;
+            newUser.username = code; // Username is StaffCode
             newUser.password = document.getElementById("staffPassword").value;
 
-            newUser.username = newUser.staffCode; // Use StaffCode as username
+            newUser.details = {
+              staffCode: code,
+              department: document.getElementById("staffDepartment").value,
+              designation: document.getElementById("designation").value,
+            };
           }
 
-          setTimeout(() => {
-            // Save to Database (Professional Method)
-            try {
-              if (window.DB) {
-                window.DB.addUser(newUser);
+          // Save to Database (Professional Method)
+          try {
+            if (window.DB) {
+              // Async API Call
+              await window.DB.addUser(newUser);
 
-                alert.className = "alert success";
-                alert.style.display = "block";
-                alert.textContent = `Account created! Username: ${newUser.username}`;
-
-                setTimeout(() => {
-                  window.location.href = `login.html?type=${userType}`;
-                }, 2000);
-              } else {
-                throw new Error("Database not initialized");
-              }
-            } catch (err) {
-              alert.className = "alert error";
+              alert.className = "alert success";
               alert.style.display = "block";
-              alert.textContent =
-                err.message || "Registration failed. Try again.";
-              btn.innerHTML = "Create Account";
-              btn.disabled = false;
+              alert.textContent = `Account created! Username: ${newUser.username}`;
+
+              setTimeout(() => {
+                window.location.href = `login.html?type=${userType}`;
+              }, 2000);
+            } else {
+              throw new Error("Database not initialized");
             }
-          }, 1000);
+          } catch (err) {
+            console.error(err);
+            alert.className = "alert error";
+            alert.style.display = "block";
+            alert.textContent =
+              err.message || "Registration failed. Try again.";
+            btn.innerHTML = "Create Account";
+            btn.disabled = false;
+          }
         });
     </script>
   </body>

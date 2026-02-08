@@ -1,50 +1,61 @@
-# JMC-TEST Professional Portal - Final Build
+# JMC-TEST Professional Portal - Full Stack Build
 
-This folder contains the complete, fully functional source code for the JMC-TEST Professional Portal.
+This folder contains the complete, fully functional source code for the JMC-TEST Professional Portal, now running on a Node.js backend with SQL Database.
+
+## Tech Stack
+
+- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
+- **Backend**: Node.js, Express.js
+- **Database**: SQLite (via Sequelize ORM)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js installed
+
+### Installation
+
+1. **Install Dependencies**
+   Navigate to the `backend` folder and install packages:
+
+   ```bash
+   cd backend
+   npm install
+   ```
+
+2. **Start the Backend Server**
+
+   ```bash
+   npm start
+   ```
+
+   The server will run on `http://localhost:3000`.
+
+3. **Run the Frontend**
+   Open `index.html` in your browser (or use a live server extension).
 
 ## Project Structure
 
-### Core Pages
-
-- **index.html**: Professional Landing Page with 3D effects.
-- **login.html**: Unified Login Page (Student & Staff tabs) with crash-proof authentication.
-- **register.html**: Registration Page (Student & Staff) with validation.
-- **student-dashboard.html**: Complete Student Dashboard (SPA) with:
-  - Test Availability
-  - Internal Test Interface (Smooth Scrolling)
-  - Analytics (Score Tracking, Pass/Fail Charts)
-  - Detailed Result Views (Correct/Wrong Answers)
-- **staff-dashboard.html**: Staff Dashboard for creating tests and managing students.
-
-### Assets & Logic
-
-- **css/**: Contains all professional styling (Glassmorphism, Dark Mode).
-- **js/**:
-  - `db.js`: Professional Data Access Layer (prevents crashes).
-  - `dashboard.js`: Unified logic for Student Dashboard & Test Taking.
-  - `staff-dashboard.js`: Logic for Staff operations.
-
-## How to Run
-
-1. Open this folder in VS Code or any editor.
-2. Use a local server (e.g., Live Server or `http-server`).
-   - Run: `npx http-server`
-3. Open `http://127.0.0.1:8080` in your browser.
+- `backend/`: Node.js server and SQLite database models.
+- `css/`: Stylesheets.
+- `js/`: Frontend logic (dashboard, charts, database client).
+- `*.html`: Application pages.
 
 ## Logic Flow
 
-1. **Registration**: Users register; data is saved via `db.js`.
-2. **Login**: Checks credentials using `db.authenticate()`. Redirects automatically if already logged in.
+1. **Registration**: Users register; data is saved to SQL Database via API.
+2. **Login**: Checks credentials via API. Redirects automatically if session is valid.
 3. **Student**:
    - Takes tests without leaving the page.
    - Views detailed results with "View Details" button.
 4. **Staff**:
-   - Creates new tests.
+   - Creates new tests via API.
    - Manages student users.
 
 ## Maintenance
 
-- Data is stored in the browser's `LocalStorage`.
-- To wipe everything and start fresh, you can manually clear your browser's LocalStorage.
+- Data is stored in `backend/jmc_placement_portal.sqlite`.
+- To reset, delete this file and restart the server (it will recreate empty tables).
 
 _Project Completed Successfully._

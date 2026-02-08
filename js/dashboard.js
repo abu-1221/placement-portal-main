@@ -209,59 +209,72 @@ function initSalaryRange() {
 // ==========================================
 
 // Load available tests for students
-function loadAvailableTests() {
+// Load available tests for students
+async function loadAvailableTests() {
   const container = document.getElementById("availableTestsList");
   if (!container) return; // Silent return if not on student dashboard
 
-  const tests = JSON.parse(localStorage.getItem("jmctest_tests") || "[]");
-  const user = JSON.parse(sessionStorage.getItem("user") || "{}");
+  try {
+      const tests = await window.DB.getTests();
+      const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
-  // Get already completed test IDs
-  const completedTestIds = (user.testsCompleted || []).map((t) => t.testId);
+      // Get already completed test IDs
+      // Note: user.testsCompleted might be stale if we don't refresh user data from server.
+      // For now, assume session is up to date or we fetch results.
+      // Better: Fetch results from server to be sure.
+      const results = await window.DB.getStudentResults(user.username);
+      const completedTestIds = results.map((t) => t.testId);
 
-  // Filter active tests that haven't been completed
-  const availableTests = tests.filter(
-    (t) => t.status === "active" && !completedTestIds.includes(t.id),
-  );
+      // Filter active tests that haven't been completed
+      const availableTests = tests.filter(
+        (t) => t.status === "active" && !completedTestIds.includes(t.id),
+      );
 
-  if (availableTests.length === 0) {
-    container.innerHTML = `
-            <div style="text-align: center; padding: 3rem; color: var(--gray-500);">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.5;">
-                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                </svg>
-                <p style="font-size: 1.1rem; font-weight: 500;">No Active Tests</p>
-                <p style="font-size: 0.9rem; opacity: 0.8;">There are no tests scheduled for you at this time.</p>
-            </div>
-        `;
-    return;
-  }
-
-  container.innerHTML = availableTests
-    .map((test) => {
-      const formattedDate = test.date
-        ? new Date(test.date).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })
-        : "No date";
-      const logo = test.company ? test.company.charAt(0).toUpperCase() : "T";
-
-      return `
-            <div class="drive-item">
-                <div class="drive-logo">${logo}</div>
-                <div class="drive-info">
-                    <h4>${test.name}</h4>
-                    <p>${test.company} • ${formattedDate} • ${test.duration} mins • ${test.questions.length} questions</p>
+      if (availableTests.length === 0) {
+        container.innerHTML = `
+                <div style="text-align: center; padding: 3rem; color: var(--gray-500);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.5;">
+                      <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    <p style="font-size: 1.1rem; font-weight: 500;">No Active Tests</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">There are no tests scheduled for you at this time.</p>
                 </div>
-                <button class="btn btn-primary btn-sm" onclick="window.confirmStartTest(${test.id})">
-                    Take Test
-                </button>
-            </div>
-        `;
-    })
-    .join("");
+            `;
+        return;
+      }
+
+      container.innerHTML = availableTests
+        .map((test) => {
+          const formattedDate = test.createdAt // Use createdAt or updatedAt from DB
+            ? new Date(test.createdAt).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })
+            : "No date";
+          const logo = test.company ? test.company.charAt(0).toUpperCase() : "T";
+
+          // Parse questions if it's a string (SQLite might return JSON as string if not handled by Sequelize)
+          // Sequelize handles JSON, so it should be array.
+          const qCount = Array.isArray(test.questions) ? test.questions.length : 0;
+
+          return `
+                <div class="drive-item">
+                    <div class="drive-logo">${logo}</div>
+                    <div class="drive-info">
+                        <h4>${test.name}</h4>
+                        <p>${test.company} • ${formattedDate} • ${test.duration} mins • ${qCount} questions</p>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="window.confirmStartTest(${test.id})">
+                        Take Test
+                    </button>
+                </div>
+            `;
+        })
+        .join("");
+    } catch (e) {
+        console.error("Error loading tests:", e);
+    }
 }
 
 // 1. Confirmation Dialog
@@ -278,8 +291,10 @@ function confirmStartTest(testId) {
 // 2. Start Test Logic (Internal)
 let activeTestInterval = null;
 let activeTestAnswers = {};
+window.currentActiveTest = null;
 
-function startInternalTest(testId) {
+
+async function startInternalTest(testId) {
   // 1. Hide all other sections
   document
     .querySelectorAll(".content-section")
@@ -293,13 +308,23 @@ function startInternalTest(testId) {
   testSection.scrollIntoView({ behavior: "smooth" });
 
   // 4. Load Test UI
-  const tests = JSON.parse(localStorage.getItem("jmctest_tests") || "[]");
+  // Fetch fresh list or get single
+  const tests = await window.DB.getTests();
   const test = tests.find((t) => t.id == testId);
 
   if (!test) {
     alert("Error loading test.");
     return;
   }
+  
+  
+  // Ensure questions is parsed
+  if(typeof test.questions === 'string') test.questions = JSON.parse(test.questions);
+  
+  // Store globally for access in sub-functions
+  window.currentActiveTest = test;
+
+
 
   const container = document.getElementById("test-interface-container");
 
@@ -366,6 +391,9 @@ function startInternalTest(testId) {
 }
 
 function renderInternalQuestion(index, test) {
+  // Fallback to global if test arg is missing/stale (from onclicks)
+  if (!test && window.currentActiveTest) test = window.currentActiveTest;
+  
   const q = test.questions[index];
   const container = document.getElementById("internalQuestionsContainer");
 
@@ -396,12 +424,12 @@ function renderInternalQuestion(index, test) {
             </div>
             
             <div class="navigation" style="display:flex; justify-content:space-between; margin-top:2rem;">
-                 <button class="btn btn-ghost" ${index === 0 ? 'disabled style="opacity:0.5"' : `onclick="renderInternalQuestion(${index - 1}, JSON.parse(decodeURIComponent('${encodeURIComponent(JSON.stringify(test))}')))"`}>Previous</button>
+                 <button class="btn btn-ghost" ${index === 0 ? 'disabled style="opacity:0.5"' : `onclick="renderInternalQuestion(${index - 1})"`}>Previous</button>
                  
                  ${
                    index < test.questions.length - 1
-                     ? `<button class="btn btn-primary" onclick="renderInternalQuestion(${index + 1}, JSON.parse(decodeURIComponent('${encodeURIComponent(JSON.stringify(test))}')))">Next</button>`
-                     : `<button class="btn btn-primary" style="background: #10b981;" onclick="finishInternalTest(JSON.parse(decodeURIComponent('${encodeURIComponent(JSON.stringify(test))}')))">Submit Test</button>`
+                     ? `<button class="btn btn-primary" onclick="renderInternalQuestion(${index + 1})">Next</button>`
+                     : `<button class="btn btn-primary" style="background: #10b981;" onclick="finishInternalTest()">Submit Test</button>`
                  }
             </div>
         </div>
@@ -410,9 +438,7 @@ function renderInternalQuestion(index, test) {
 
 function selectInternalAnswer(index, answer, testId) {
   activeTestAnswers[index] = answer;
-  const tests = JSON.parse(localStorage.getItem("jmctest_tests") || "[]");
-  const test = tests.find((t) => t.id == testId);
-  renderInternalQuestion(index, test);
+  renderInternalQuestion(index);
 }
 
 function cancelTest() {
@@ -422,7 +448,9 @@ function cancelTest() {
   }
 }
 
-function finishInternalTest(test) {
+async function finishInternalTest() {
+  const test = window.currentActiveTest;
+
   clearInterval(activeTestInterval);
 
   // Calculate Score
@@ -437,56 +465,51 @@ function finishInternalTest(test) {
   // Save Result
   const user = JSON.parse(sessionStorage.getItem("user"));
   const result = {
+    username: user.username,
     testId: test.id,
     testName: test.name,
     company: test.company,
-    date: new Date().toISOString(),
     score: percentage,
-    correct: correct,
-    total: test.questions.length,
     status: status,
-    answers: activeTestAnswers, // Save answers for "View Details"
-    questions: test.questions, // Save snapshot of questions too
+    answers: activeTestAnswers, 
   };
 
-  // Update LocalStorage user (persistent)
-  const storedUsers = JSON.parse(localStorage.getItem("jmctest_users"));
-  const sIdx = storedUsers.students.findIndex(
-    (s) => s.username === user.username,
-  );
-  if (sIdx !== -1) {
-    if (!storedUsers.students[sIdx].testsCompleted)
-      storedUsers.students[sIdx].testsCompleted = [];
-    storedUsers.students[sIdx].testsCompleted.push(result);
-    localStorage.setItem("jmctest_users", JSON.stringify(storedUsers));
-  }
+  try {
+      await window.DB.submitTest(result);
+      
+      // Update Session Storage to reflect new completion immediately?
+      // Or just reload.
+      // Let's reload the completed list from server.
+      
+      alert(`Test Submitted! You scored ${percentage}%.`);
 
-  // Update Session
-  if (!user.testsCompleted) user.testsCompleted = [];
-  user.testsCompleted.push(result);
-  sessionStorage.setItem("user", JSON.stringify(user));
+      // Reload tests list and go there
+      loadAvailableTests();
+      loadCompletedTests();
+      document.querySelector('[data-section="tests"]').click();
 
-  alert(`Test Submitted! You scored ${percentage}%.`);
-
-  // Reload tests list and go there
-  loadAvailableTests();
-  loadCompletedTests();
-  document.querySelector('[data-section="tests"]').click();
-
-  // Refresh charts and analytics
-  initCharts();
-  if (typeof initEnhancedAnalytics === "function") {
-    initEnhancedAnalytics();
+      // Refresh charts and analytics
+      initCharts();
+      if (typeof initEnhancedAnalytics === "function") {
+        initEnhancedAnalytics();
+      }
+  } catch(e) {
+      alert("Error submitting test: " + e.message);
   }
 }
 
 // Load completed tests for students
-function loadCompletedTests() {
+// Load completed tests for students
+async function loadCompletedTests() {
   const tbody = document.querySelector("#tests-section tbody");
   if (!tbody) return;
 
   const user = JSON.parse(sessionStorage.getItem("user") || "{}");
-  const completedTests = user.testsCompleted || [];
+  // Fetch from server
+  const completedTests = await window.DB.getStudentResults(user.username);
+  // Update session storage for other components that might need it (like analytics)
+  user.testsCompleted = completedTests;
+  sessionStorage.setItem("user", JSON.stringify(user));
 
   if (completedTests.length === 0) {
     tbody.innerHTML = `
