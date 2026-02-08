@@ -7,7 +7,7 @@ const Test = require('./models/Test');
 const Result = require('./models/Result');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // Use Render's port or 3000 locally
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -105,7 +105,7 @@ app.get('/api/results/all', async (req, res) => {
 
 // Initialization
 sequelize.sync().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  app.listen(PORT, '0.0.0.0', () => { // Bind to 0.0.0.0 for external access
+    console.log(`Server running on port ${PORT}`);
   });
 }).catch(err => console.error('Database sync error:', err));
