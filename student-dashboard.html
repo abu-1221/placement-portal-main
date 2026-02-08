@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student Dashboard | PlaceMe</title>
+    <title>Student Dashboard | JMC-TEST</title>
     <link rel="icon" type="image/png" href="logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,10 +25,10 @@
             <img
               src="logo.png"
               class="brand-logo"
-              alt="PlaceMe Logo"
+              alt="JMC-TEST Logo"
               style="margin-right: 10px"
             />
-            <span>PlaceMe</span>
+            <span>JMC-TEST</span>
           </a>
           <button class="sidebar-toggle-btn" id="sidebarToggleBtn">
             <svg
@@ -162,7 +162,36 @@
                     color: var(--gray-500);
                   "
                 >
-                  <p>No active tests available at the moment</p>
+                  <div
+                    style="
+                      text-align: center;
+                      padding: 3rem;
+                      color: var(--gray-500);
+                    "
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      style="
+                        width: 48px;
+                        height: 48px;
+                        margin-bottom: 1rem;
+                        opacity: 0.5;
+                      "
+                    >
+                      <path
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                      />
+                    </svg>
+                    <p style="font-size: 1.1rem; font-weight: 500">
+                      No Active Tests
+                    </p>
+                    <p style="font-size: 0.9rem; opacity: 0.8">
+                      There are no tests scheduled for you at this time.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -172,7 +201,7 @@
           <section class="content-section" id="tests-section">
             <div class="section-intro">
               <h2>Tests Attended</h2>
-              <p>View all your placement tests and scores</p>
+              <p>View all your Placement tests and scores</p>
             </div>
             <div class="stats-grid">
               <div class="stat-card">
@@ -318,7 +347,7 @@
           <section class="content-section" id="reports-section">
             <div class="section-intro">
               <h2>Reports & Documents</h2>
-              <p>Download your placement reports and certificates</p>
+              <p>Download your Placement reports and certificates</p>
             </div>
             <div class="reports-grid">
               <div class="report-card">
@@ -359,10 +388,10 @@
                   </svg>
                 </div>
                 <h3>Activity Log</h3>
-                <p>Record of all your placement activities</p>
+                <p>Record of all your Placement activities</p>
                 <button
                   class="btn btn-primary btn-sm"
-                  onclick="alert('Activity log feature coming soon!')"
+                  onclick="alert('This report is currently unavailable.')"
                 >
                   Download PDF
                 </button>
@@ -383,7 +412,11 @@
                 <p>Certificates for completed assessments</p>
                 <button
                   class="btn btn-primary btn-sm"
-                  onclick="alert('Certificate generation coming soon!')"
+                  onclick="
+                    alert(
+                      'Certificate generation is unavailable until course completion.',
+                    )
+                  "
                 >
                   Download PDF
                 </button>

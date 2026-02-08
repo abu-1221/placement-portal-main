@@ -1,5 +1,5 @@
 /**
- * PlaceMe - Simplified Analytics Module
+ * JMC-TEST - Simplified Analytics Module
  * Strictly five chart types: Bar, Pie, Line, Scatter, Dot
  */
 

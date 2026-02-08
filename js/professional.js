@@ -1,5 +1,5 @@
 /**
- * PlaceMe - Professional Enhancement Scripts
+ * JMC-TEST - Professional Enhancement Scripts
  * Adds premium interactions, animations, and UX improvements
  */
 
@@ -425,7 +425,7 @@
     if (!sessionStorage.getItem("welcomed")) {
       setTimeout(() => {
         showToast(
-          "Welcome to PlaceMe! Your journey to success starts here.",
+          "Welcome to JMC-TEST! Your journey to success starts here.",
           "success",
         );
         sessionStorage.setItem("welcomed", "true");

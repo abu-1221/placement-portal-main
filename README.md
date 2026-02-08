@@ -1,6 +1,6 @@
-# PlaceMe Professional Portal - Final Build
+# JMC-TEST Professional Portal - Final Build
 
-This folder contains the complete, fully functional source code for the PlaceMe Professional Portal.
+This folder contains the complete, fully functional source code for the JMC-TEST Professional Portal.
 
 ## Project Structure
 

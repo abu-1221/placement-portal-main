@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Take Test | PlaceMe</title>
+    <title>Take Test | JMC-TEST</title>
     <link rel="icon" type="image/png" href="logo.png" />
     <link rel="icon" type="image/png" href="logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -389,7 +389,7 @@
       });
 
       function loadTest(testId) {
-        const tests = JSON.parse(localStorage.getItem("placeme_tests") || "[]");
+        const tests = JSON.parse(localStorage.getItem("JMC-TEST_tests") || "[]");
         currentTest = tests.find((t) => t.id == testId);
 
         if (!currentTest) {
@@ -540,7 +540,7 @@
 
         // Update user's test results
         const storedUsers = JSON.parse(
-          localStorage.getItem("placeme_users") || '{"students":[],"staff":[]}',
+          localStorage.getItem("JMC-TEST_users") || '{"students":[],"staff":[]}',
         );
         const studentIndex = storedUsers.students.findIndex(
           (s) => s.username === user.username,
@@ -551,7 +551,7 @@
             storedUsers.students[studentIndex].testsCompleted = [];
           }
           storedUsers.students[studentIndex].testsCompleted.push(result);
-          localStorage.setItem("placeme_users", JSON.stringify(storedUsers));
+          localStorage.setItem("JMC-TEST_users", JSON.stringify(storedUsers));
         }
 
         // Also update session

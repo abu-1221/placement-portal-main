@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Staff Dashboard | PlaceMe</title>
+    <title>Staff Dashboard | JMC-TEST</title>
     <link rel="icon" type="image/png" href="logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,10 +23,10 @@
             <img
               src="logo.png"
               class="brand-logo"
-              alt="PlaceMe Logo"
+              alt="JMC-TEST Logo"
               style="margin-right: 10px"
             />
-            <span>PlaceMe</span>
+            <span>JMC-TEST</span>
           </a>
           <button class="sidebar-toggle-btn" id="sidebarToggleBtn">
             <svg
@@ -171,7 +171,7 @@
           <section class="content-section active" id="create-test-section">
             <div class="section-intro">
               <h2>Create New Test</h2>
-              <p>Design and configure placement tests for students</p>
+              <p>Design and configure Placement tests for students</p>
             </div>
             <div class="create-test-container">
               <form id="createTestForm" class="test-form" autocomplete="off">
@@ -441,15 +441,20 @@
                   </thead>
                   <tbody id="testsTableBody">
                     <tr>
-                      <td
-                        colspan="6"
-                        style="
-                          text-align: center;
-                          padding: 2rem;
-                          color: var(--gray-500);
-                        "
-                      >
-                        Loading tests...
+                      <td colspan="6">
+                        <div
+                          style="
+                            text-align: center;
+                            padding: 3rem;
+                            color: var(--gray-500);
+                          "
+                        >
+                          <div
+                            class="spinner"
+                            style="margin: 0 auto 1rem"
+                          ></div>
+                          <p>Loading tests...</p>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -586,15 +591,38 @@
                   </thead>
                   <tbody id="studentsTableBody">
                     <tr>
-                      <td
-                        colspan="9"
-                        style="
-                          text-align: center;
-                          padding: 2rem;
-                          color: var(--gray-500);
-                        "
-                      >
-                        No students registered yet
+                      <td colspan="9">
+                        <div
+                          style="
+                            text-align: center;
+                            padding: 3rem;
+                            color: var(--gray-500);
+                          "
+                        >
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            style="
+                              width: 48px;
+                              height: 48px;
+                              margin-bottom: 1rem;
+                              opacity: 0.5;
+                            "
+                          >
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                            <path d="M16 3.13a4 4 0 010 7.75" />
+                          </svg>
+                          <p style="font-size: 1.1rem; font-weight: 500">
+                            No Students Found
+                          </p>
+                          <p style="font-size: 0.9rem; opacity: 0.8">
+                            No students have registered in this category yet.
+                          </p>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -719,8 +747,18 @@
                     </thead>
                     <tbody id="testResultsTableBody">
                       <tr>
-                        <td colspan="4" style="text-align: center">
-                          No data available
+                        <td colspan="4">
+                          <div
+                            style="
+                              text-align: center;
+                              padding: 2rem;
+                              color: var(--gray-500);
+                            "
+                          >
+                            <p>
+                              No performance data available for this selection.
+                            </p>
+                          </div>
                         </td>
                       </tr>
                     </tbody>

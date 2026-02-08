@@ -1,4 +1,4 @@
-/* PlaceMe - Global Styles */
+/* JMC-TEST - Global Styles */
 :root {
   --primary-500: #667eea;
   --primary-600: #5b5bd6;
@@ -93,6 +93,17 @@ button {
   box-shadow:
     0 20px 25px -5px rgba(0, 0, 0, 0.1),
     var(--shadow-glow);
+}
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 .btn-ghost {
   background: transparent;

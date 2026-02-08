@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Advanced Analytics Viewer | PlaceMe</title>
+    <title>Advanced Analytics Viewer | JMC-TEST</title>
     <link rel="icon" type="image/png" href="logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -198,7 +198,7 @@
       <div class="page-header">
         <h1>Advanced Analytics Viewer</h1>
         <p>
-          Comprehensive placement analytics powered by Python Matplotlib &
+          Comprehensive Placement analytics powered by Python Matplotlib &
           Machine Learning
         </p>
       </div>
@@ -367,7 +367,7 @@
               if (data.prediction) {
                 metaDiv.innerHTML = `
                                 <div class="meta-item"><strong>Prediction:</strong> ${data.prediction.will_be_placed ? "Will be placed" : "Needs improvement"}</div>
-                                <div class="meta-item"><strong>Probability:</strong> ${data.prediction.placement_probability.toFixed(1)}%</div>
+                                <div class="meta-item"><strong>Probability:</strong> ${data.prediction.Placement_probability.toFixed(1)}%</div>
                                 <div class="meta-item"><strong>Recommendation:</strong> ${data.prediction.recommendation}</div>
                             `;
               } else if (data.data.correlation !== undefined) {
@@ -405,7 +405,15 @@
             throw new Error(data.error || "Unknown error");
           }
         } catch (error) {
-          container.innerHTML = `<div class="error">❌ Error loading chart: ${error.message}<br><small>Make sure Python analytics server is running on port 5000</small></div>`;
+          container.innerHTML = `
+            <div style="text-align: center; padding: 2rem; color: var(--gray-400);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 32px; height: 32px; margin-bottom: 0.5rem; opacity: 0.5;">
+                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                    <line x1="12" y1="2" x2="12" y2="12" />
+                </svg>
+                <p style="font-size: 0.9rem;">Analytics data unavailable</p>
+            </div>
+          `;
         }
       }
 
@@ -434,7 +442,7 @@
         const studentName =
           document.getElementById("studentName").value || "Student";
 
-        loadChart("chart-prediction", "/placement-prediction", "POST", {
+        loadChart("chart-prediction", "/Placement-prediction", "POST", {
           test_score: testScore,
         });
         loadChart("chart-trend", "/performance-trend", "POST", {

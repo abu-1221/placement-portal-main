@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Login to PlaceMe - India's Premier Student Placement Portal"
+      content="Login to JMC-TEST - India's Premier Student Placement Portal"
     />
-    <title>Login | PlaceMe</title>
+    <title>Login | JMC-TEST</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png" />
@@ -31,7 +31,7 @@
         <!-- Header -->
         <div class="auth-header">
           <a href="index.html" class="auth-logo">
-            <img src="logo.png" class="brand-logo" alt="PlaceMe Logo" />
+            <img src="logo.png" class="brand-logo" alt="JMC-TEST Logo" />
           </a>
           <h1>Welcome Back</h1>
           <p>Sign in to your account</p>
@@ -273,36 +273,30 @@
             let isValid = false;
             let user = null;
 
-            // 1. Check Demo Credentials
-            if (
-              (userType === "student" &&
-                username === "demo_student" &&
-                password === "demo123") ||
-              (userType === "staff" &&
-                username === "demo_staff" &&
-                password === "demo123")
-            ) {
-              isValid = true;
-            }
-
-            // 2. Check Database (Professional Method)
-            if (!isValid) {
-              // DB is globally available via db.js
-              if (window.DB) {
-                user = window.DB.authenticate(username, password, userType);
-                if (user) isValid = true;
-              } else {
-                console.error("Database connection failed (db.js missing)");
+            // Database Authentication
+            if (window.DB) {
+              const dbUser = window.DB.authenticate(
+                username,
+                password,
+                userType,
+              );
+              if (dbUser) {
+                isValid = true;
+                user = dbUser;
               }
+            } else {
+              // Fallback error if DB script missing
+              console.error("Database connection failed");
             }
 
             if (isValid) {
               alert.className = "alert success";
               alert.style.display = "block";
+              alert.textContent = "Authentication successful. Redirecting...";
 
               // Create robust session object
               let sessionName =
-                userType === "student" ? "Demo Student" : "Demo Staff";
+                userType === "student" ? "Student" : "Staff Member";
               if (user && user.fullName) {
                 sessionName = user.fullName;
               }
@@ -323,27 +317,21 @@
               // Store session
               sessionStorage.setItem("user", JSON.stringify(sessionData));
 
-              // Debug log
-              console.log("Session set:", sessionData);
-              console.log(
-                "Redirecting to:",
-                userType === "student"
-                  ? "student-dashboard.html"
-                  : "staff-dashboard.html",
-              );
-
               setTimeout(() => {
                 const targetPage =
                   userType === "student"
                     ? "student-dashboard.html"
                     : "staff-dashboard.html";
                 window.location.replace(targetPage);
-              }, 500);
+              }, 800);
             } else {
               alert.className = "alert error";
               alert.style.display = "block";
-              alert.textContent = "Invalid credentials. Please try again.";
-              btn.innerHTML = "Sign In";
+              alert.textContent =
+                "Invalid credentials. Please checking your username and password.";
+
+              // Reset button
+              btn.textContent = "Sign In";
               btn.disabled = false;
             }
           }, 800);

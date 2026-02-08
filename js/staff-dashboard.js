@@ -78,7 +78,7 @@ function initCreateTestForm() {
         showNotification('Test Created Successfully!', `${testName} is now available for students.`, 'success');
         
         // Show success message
-        alert('Test created successfully! It will now appear in student availability.');
+        // alert('Test created successfully! It will now appear in student availability.'); // Removed in favor of notification above
         
         // Reset form
         form.reset();
@@ -145,7 +145,7 @@ function initAddQuestion() {
                 this.closest('.question-item').remove();
                 updateQuestionNumbers();
             } else {
-                alert('You need at least one question.');
+                showNotification('Warning', 'You need at least one question.', 'error');
             }
         });
     });
@@ -225,7 +225,21 @@ function loadTests() {
     tbody.innerHTML = '';
     
     if (userTests.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--gray-500);">No tests created yet. Create a test to get started.</td></tr>';
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    <div style="text-align: center; padding: 3rem; color: var(--gray-500);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.5;">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="16" />
+                            <line x1="8" y1="12" x2="16" y2="12" />
+                        </svg>
+                        <p style="font-size: 1.1rem; font-weight: 500;">No Tests Created</p>
+                        <p style="font-size: 0.9rem; opacity: 0.8;">Create a new test to get started.</p>
+                    </div>
+                </td>
+            </tr>
+        `;
         return;
     }
     
@@ -325,7 +339,22 @@ function loadStudents() {
     tbody.innerHTML = '';
     
     if (students.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem; color: var(--gray-500);">No students registered yet</td></tr>';
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="9">
+                    <div style="text-align: center; padding: 3rem; color: var(--gray-500);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width: 48px; height: 48px; margin-bottom: 1rem; opacity: 0.5;">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                            <path d="M16 3.13a4 4 0 010 7.75" />
+                        </svg>
+                        <p style="font-size: 1.1rem; font-weight: 500;">No Students Found</p>
+                        <p style="font-size: 0.9rem; opacity: 0.8;">No students have registered in this category yet.</p>
+                    </div>
+                </td>
+            </tr>
+        `;
         return;
     }
     
@@ -727,7 +756,15 @@ function loadTestAnalytics(testId) {
     if (resultsTable) {
         resultsTable.innerHTML = '';
         if (results.length === 0) {
-            resultsTable.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 1rem;">No students have taken this test yet</td></tr>';
+            resultsTable.innerHTML = `
+                <tr>
+                    <td colspan="4">
+                        <div style="text-align: center; padding: 2rem; color: var(--gray-500);">
+                            <p>No students have taken this test yet.</p>
+                        </div>
+                    </td>
+                </tr>
+            `;
         } else {
             results.forEach(r => {
                 const dateStr = r.date ? new Date(r.date).toLocaleDateString() : '-';
@@ -760,7 +797,7 @@ function viewTestAnalytics(testId) {
 
 function editTest(testId) {
     // Placeholder for edit functionality
-    alert('Edit functionality coming soon for test ID: ' + testId);
+    showNotification('Info', 'Edit functionality is under development.', 'info');
 }
 
 // Ensure global access

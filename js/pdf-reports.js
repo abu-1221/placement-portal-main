@@ -1,5 +1,5 @@
 // PDF Report Generation Module
-// Uses jsPDF library to generate student placement reports
+// Uses jsPDF library to generate student Placement reports
 
 function generatePerformanceReport() {
     // Load jsPDF dynamically if not loaded
@@ -33,7 +33,7 @@ function generatePDFReport() {
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(24);
     doc.setFont(undefined, 'bold');
-    doc.text('PlaceMe', 15, 20);
+    doc.text('JMC-TEST', 15, 20);
     
     doc.setFontSize(14);
     doc.setFont(undefined, 'normal');
@@ -190,11 +190,11 @@ function generatePDFReport() {
         doc.setFontSize(8);
         doc.setTextColor(150, 150, 150);
         doc.text(`Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
-        doc.text('PlaceMe Placement Portal | Confidential', 105, 285, { align: 'center' });
+        doc.text('JMC-TEST Placement Portal | Confidential', 105, 285, { align: 'center' });
     }
     
     // Save
-    const fileName = `PlaceMe_Report_${user.name?.replace(/\s+/g, '_') || 'Student'}_${new Date().toISOString().split('T')[0]}.pdf`;
+    const fileName = `JMC-TEST_Report_${user.name?.replace(/\s+/g, '_') || 'Student'}_${new Date().toISOString().split('T')[0]}.pdf`;
     doc.save(fileName);
     
     // Show notification
@@ -296,7 +296,7 @@ function generateAnalyticsPDF() {
     }
     
     // Save
-    const fileName = `PlaceMe_Analytics_${user.name?.replace(/\s+/g, '_') || 'Student'}_${new Date().toISOString().split('T')[0]}.pdf`;
+    const fileName = `JMC-TEST_Analytics_${user.name?.replace(/\s+/g, '_') || 'Student'}_${new Date().toISOString().split('T')[0]}.pdf`;
     doc.save(fileName);
     
     showNotification('Analytics Report Downloaded!', fileName, 'success');
