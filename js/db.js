@@ -4,7 +4,15 @@
  */
 class JMCTestDB {
     constructor() {
-        this.API_URL = 'http://localhost:3000/api';
+        // Use relative path for production (works when frontend is served by backend)
+        // If developing separately, use http://localhost:3000/api
+        this.API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+            ? 'http://localhost:3000/api' // Keep localhost for local dev if independent
+            : '/api'; // Relative for deployed app
+        
+        // Actually, simpler: just use /api if we are serving from the same origin.
+        // Since we are merging to a monolith structure:
+        this.API_URL = '/api';
     }
 
     /**

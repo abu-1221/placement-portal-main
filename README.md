@@ -17,23 +17,22 @@ This folder contains the complete, fully functional source code for the JMC-TEST
 ### Installation
 
 1. **Install Dependencies**
-   Navigate to the `backend` folder and install packages:
+   Open a terminal in the project root and run:
 
    ```bash
-   cd backend
    npm install
    ```
 
-2. **Start the Backend Server**
+2. **Start the Application**
 
    ```bash
    npm start
    ```
 
-   The server will run on `http://localhost:3000`.
+   This will start the backend server on `http://localhost:3000`.
 
-3. **Run the Frontend**
-   Open `index.html` in your browser (or use a live server extension).
+3. **Open the App**
+   Open `index.html` in your browser. The backend will serve the API, and `index.html` will consume it.
 
 ## Project Structure
 
