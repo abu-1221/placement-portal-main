@@ -594,22 +594,33 @@
               // Async API Call
               await window.DB.addUser(newUser);
 
+              // Show success message
               alert.className = "alert success";
               alert.style.display = "block";
-              alert.textContent = `Account created! Username: ${newUser.username}`;
+              alert.textContent = `✅ Account created successfully! Username: ${newUser.username}. Redirecting to login...`;
 
+              // Update button to success state
+              btn.innerHTML = "✓ Account Created!";
+              btn.style.background = "#10b981";
+              btn.disabled = true;
+
+              // Redirect to login page after 1.5 seconds
               setTimeout(() => {
-                window.location.href = `login.html?type=${userType}`;
-              }, 2000);
+                window.location.replace(
+                  `login.html?type=${userType}&registered=${encodeURIComponent(newUser.username)}`,
+                );
+              }, 1500);
             } else {
-              throw new Error("Database not initialized");
+              throw new Error(
+                "Database not initialized. Please ensure the server is running.",
+              );
             }
           } catch (err) {
-            console.error(err);
+            console.error("Registration error:", err);
             alert.className = "alert error";
             alert.style.display = "block";
             alert.textContent =
-              err.message || "Registration failed. Try again.";
+              err.message || "Registration failed. Please try again.";
             btn.innerHTML = "Create Account";
             btn.disabled = false;
           }

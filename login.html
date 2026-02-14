@@ -210,6 +210,29 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const type = urlParams.get("type");
+        const registeredUsername = urlParams.get("registered");
+
+        // If arriving from registration, pre-fill username and show success message
+        if (registeredUsername) {
+          const usernameInput = document.getElementById("username");
+          if (usernameInput) {
+            usernameInput.value = decodeURIComponent(registeredUsername);
+          }
+
+          const alert = document.getElementById("authAlert");
+          if (alert) {
+            alert.className = "alert success";
+            alert.style.display = "block";
+            alert.textContent =
+              "✅ Registration successful! Please enter your password to sign in.";
+          }
+
+          // Focus on password field for convenience
+          setTimeout(() => {
+            const passwordInput = document.getElementById("password");
+            if (passwordInput) passwordInput.focus();
+          }, 300);
+        }
 
         if (type && (type === "student" || type === "staff")) {
           // Find the button and click it to trigger logic
